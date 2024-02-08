@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:noti_app/backgroundservice/background_service.dart';
 import 'package:noti_app/firebase_options.dart';
 import 'package:noti_app/notificationservice/local_notification_service.dart';
 import 'package:noti_app/screens/home_screen.dart';
@@ -42,6 +43,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
   await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  // await initializeService();
   runApp(const MyApp());
 }
 

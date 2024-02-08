@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:noti_app/notificationservice/local_notification_service.dart';
 import 'package:noti_app/screens/demo.dart';
+import 'package:noti_app/screens/service_test_screen.dart';
 import 'package:workmanager/workmanager.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -79,19 +80,34 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Notification App'),
       ),
       body: Center(
-        child: ElevatedButton(
-            // onPressed: () {
-            //   //on Demand background Task
-            //   LocalNotificationService.createanddisplaynotification(samplMsg);
-            // },
-            //task scheduler
-            onPressed: () {
-              //on Demand background Task
-              Workmanager().registerPeriodicTask("taskOne", "periodic",
-                  // constraints: Constraints(networkType: NetworkType.connected),
-                  initialDelay: const Duration(minutes: 15));
-            },
-            child: Text("Push Notification")),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+                // onPressed: () {
+                //   //on Demand background Task
+                //   LocalNotificationService.createanddisplaynotification(samplMsg);
+                // },
+                //task scheduler
+                onPressed: () {
+                  //on Demand background Task
+                  Workmanager().registerOneOffTask("OnlyOneTask", "Single",
+                      // constraints: Constraints(networkType: NetworkType.connected),
+                      initialDelay: const Duration(seconds: 5));
+                },
+                child: const Text("Push Notification")),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const ServiceTestScreen(title: "Service Page")));
+                },
+                child: const Text("Service Page")),
+          ],
+        ),
       ),
     );
   }
