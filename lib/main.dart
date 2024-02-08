@@ -7,11 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:noti_app/firebase_options.dart';
 import 'package:noti_app/notificationservice/local_notification_service.dart';
 import 'package:noti_app/screens/home_screen.dart';
+import 'package:workmanager/workmanager.dart';
 
 //start firebase background services
 Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
   print(message.notification!.title);
+}
+
+void callbackDispatcher() {
+  RemoteMessage samplMsg = const RemoteMessage(
+      notification:
+          RemoteNotification(title: "Tech Sales", body: "check check"));
+  Workmanager().executeTask((taskName, inputData) {
+    print("Task executing: " + taskName);
+    LocalNotificationService.createanddisplaynotification(samplMsg);
+    return Future.value(true);
+  });
 }
 
 void main() async {
@@ -29,6 +41,7 @@ void main() async {
   //call the backgroundHandler function
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initialize();
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   runApp(const MyApp());
 }
 

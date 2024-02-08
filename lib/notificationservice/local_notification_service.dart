@@ -17,14 +17,6 @@ class LocalNotificationService {
         print("onSelectNotification");
         if (id!.isNotEmpty) {
           print("Router XXXX $id");
-
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => DemoScreen(
-          //       id: id,
-          //     ),
-          //   ),
-          // );
         }
       },
     );

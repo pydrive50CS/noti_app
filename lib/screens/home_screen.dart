@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:noti_app/notificationservice/local_notification_service.dart';
 import 'package:noti_app/screens/demo.dart';
+import 'package:workmanager/workmanager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,12 +12,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // RemoteNotification? sampleNoti = const RemoteNotification(title: "Tech Sales", body: "check check");
+  RemoteMessage samplMsg = const RemoteMessage(
+      notification:
+          RemoteNotification(title: "Tech Sales", body: "check check"));
   //define all the three conditions of app termination, app in foreground and app in background in the init state
 
   //note: a notification channel is required for displaying handsome notification => this is to be done in the android manifest file inside activity
   @override
   void initState() {
     super.initState();
+    //default frequency is 15 minutes and anything below that is set to 15 minutes by default
 
     /* 1. This method call when app in terminated state and you get a notification
     when you click on notification app open from terminated state and you can get notification data in this method*/
@@ -72,8 +78,20 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: const Text('Notification App'),
       ),
-      body: const Center(
-        child: Text('Push Notification'),
+      body: Center(
+        child: ElevatedButton(
+            // onPressed: () {
+            //   //on Demand background Task
+            //   LocalNotificationService.createanddisplaynotification(samplMsg);
+            // },
+            //task scheduler
+            onPressed: () {
+              //on Demand background Task
+              Workmanager().registerPeriodicTask("taskOne", "periodic",
+                  // constraints: Constraints(networkType: NetworkType.connected),
+                  initialDelay: const Duration(minutes: 15));
+            },
+            child: Text("Push Notification")),
       ),
     );
   }

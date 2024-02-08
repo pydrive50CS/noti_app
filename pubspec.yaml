@@ -39,6 +39,8 @@ dependencies:
   flutter_local_notifications: ^9.2.0
   firebase_in_app_messaging: ^0.7.4+12
   permission_handler: ^11.2.0
+  workmanager: ^0.5.2
+  
 
 dev_dependencies:
   flutter_test:
